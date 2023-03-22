@@ -1,0 +1,54 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :sync_files
+#Author		     :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :Sync two folders using rsync
+#------------------------------------------------------------------------------#
+
+if [[ ( $# -eq 0 ) || ( $1 == "--help" ) || ( $1 == "-h" ) ]] ; then
+    echo "Configured rsync function to sync files" 
+    echo "       " 
+    echo "Options used: -rtpv --progress --delete --modify-window=1 -lHs"
+    echo "       "
+    echo "Mandatory arguments (can be relative path): " 
+    echo "PATH_FROM: sourceDir/" 
+    echo "PATH_TO: targetDir/" 
+    echo "     "
+    echo "Example:"
+    echo "rsync -r -t -p -v --progress --delete --modify-window=1 -l -H -s sourceDir/ targetDir/"
+
+    exit 1
+fi
+
+if [[ $# -ne 2 ]]; then
+    echo "2 argument required, $# provided" >&2
+    exit 2
+fi
+
+#grabs last passed argument..
+for last; do true; done
+
+printf "\n"
+echo "Source folder:  ${@:1:$(($#-1))}"
+echo "Target folder: $last"
+printf "\n"
+
+while true; do
+
+    rsync -n -r -t -p -v --progress --delete --modify-window=1 -l -H -s ${@:1:$(($#-1))} $last
+    
+    read -p "Do you want to continue? (y/n) " yn
+
+    case $yn in 
+        [yY] ) rsync -r -t -p -v --progress --delete --modify-window=1 -l -H -s ${@:1:$(($#-1))} $last
+            break;;
+        [nN] ) break;;
+        * ) echo invalid response;;
+    esac
+
+done
+
+#------------------------------------------------------------------------------#

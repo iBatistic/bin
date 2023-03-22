@@ -1,0 +1,75 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :Functions
+#Author		     :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :My collection of bash shell functions
+#------------------------------------------------------------------------------#
+
+# Function used to check number of arguments
+checkArgNum() {
+    if [[ $1 -ne $2 ]]; then
+        echo "$2 argument required, $1 provided" >&2
+        return 1;
+    fi
+}
+
+# Save working directory path, use wd to relocate terminal on it
+swd() {
+    checkArgNum $# "0"  
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+
+    cwd=$(pwd)
+
+    echo $cwd > $HOME/.saved_dir
+
+    echo "Saved current working dir: $cwd"
+}
+
+
+# Change to directory saved using swd() function 
+wd() {
+    checkArgNum $# "0"  
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+
+    if [ -f $HOME/.saved_dir ]; then
+        cwd=$(<$HOME/.saved_dir)
+        cd $cwd
+    fi
+}
+
+# See the most used commands in terminal
+printComandsUsage () { 
+    checkArgNum $# "0"  
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+    
+    history|awk '{print $2}'|awk 'BEGIN {FS="|"} {print $1}'|sort|uniq -c|sort -rn
+}
+
+# Find file and grep expression through it
+findGrep () {
+    checkArgNum $# "2"  
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+    
+    find . -name "$1" | xargs -I {} grep -n --color "$2" {}
+}
+
+#------------------------------------------------------------------------------#

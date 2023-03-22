@@ -1,0 +1,21 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :Uncompress specified folder
+#Author		     :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :Uncompress specified folder using tar command
+#------------------------------------------------------------------------------#
+
+if [[ $# -ne 1 ]]; then
+    echo "1 argument required, $# provided" >&2
+    exit 2
+fi
+
+#grabs last passed argument..
+for last; do true; done
+
+tar -zxf $1
+
+#------------------------------------------------------------------------------#

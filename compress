@@ -1,0 +1,49 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :compress
+#Author		     :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :
+#------------------------------------------------------------------------------#
+
+if [[ ( $# -eq 0 ) || ( $1 == "--help" ) || ( $1 == "-h" ) ]] ; then
+    echo "Configured tar function to compress files" 
+    echo "       " 
+    echo "Options used: -czvf"
+    echo "       "
+    echo "Mandatory arguments: fileName" 
+    echo "     "
+    echo "Example:"
+    echo "tar -czvf fileName.tar.gz fileName"
+
+    exit 1
+fi
+
+if [[ $# -ne 1 ]]; then
+    echo "1 argument required, $# provided" >&2
+    return 1;
+fi
+
+lastChar=${1: -1}
+t=""
+
+if [[ "$lastChar" == "/" ]];
+then
+    t=${1::-1}."tar.gz"
+else
+    t=$1."tar.gz"
+fi
+
+echo "Compressing folder $1 into $t"
+echo
+tar -czvf $t $1
+
+b_c=$(du -sh "$1" | awk '{print $1}')
+a_c=$(du -h "$t" | awk '{print $1}')
+
+echo
+echo "Compression ratio: $b_c -> $a_c"
+
+#------------------------------------------------------------------------------#
