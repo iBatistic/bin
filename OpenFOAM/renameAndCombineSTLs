@@ -1,0 +1,41 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :Rename and combine multiple stls
+#Author          :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :Combine multiple stls into one for meshing using cfMesh
+#Note            :To use this function each stl needs to have OBJECT an a name for header and footer
+#------------------------------------------------------------------------------#
+
+# Run from this directory
+cd ${0%/*} || exit 1
+
+# exit on error
+set -e
+
+if [[ $# -ne 0 ]]; then
+    echo "0 argument required, $# provided" >&2
+    return 1;
+fi
+
+for f in *.stl; 
+do 
+    echo "Processing $f file.."; 
+
+    patchName=${f::-4};
+
+    echo "   Patch name: $patchName";
+
+    sed -i "s/OBJECT/${patchName}/g" "$f";
+done
+
+# Remove old domain.stl
+rm -rf domain.stl;
+
+# Combine stl files into one file
+cat *.stl >> domain.stl;
+
+
+#------------------------------------------------------------------------------#

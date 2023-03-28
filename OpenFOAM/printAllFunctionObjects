@@ -1,0 +1,54 @@
+#!/bin/sh
+#------------------------------------------------------------------------------#
+#Title           :Print all OpenFOAM function objects
+#Author          :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :Print all OpenFOAM function objects
+#------------------------------------------------------------------------------#
+
+# Check if OpenFOAM/FOAM has been sourced
+if [[ -z "${WM_PROJECT}" ]]
+then
+    echo "Please source the OpenFOAM/FOAM bashrc first!"
+    exit 1
+fi
+
+# Check if OpenFOAM/FOAM has been sourced
+if [[ "${WM_PROJECT}" -eq "foam" ]]
+then
+    echo "Not implemented for foam-extend version"
+    exit 1
+fi
+
+if [[ $# -ne 0 ]]; then
+    echo "0 argument required, $# provided" >&2
+    return 1;
+fi
+
+COUNT=0
+cd $FOAM_SRC
+for OBJECTS_PATH in `find functionObjects | sort -f | grep -v lnInclude | grep "\.H$" | xargs -I {} dirname {} | sed -e "s%^./%%" | uniq` ; do
+    FILES=$OBJECTS_PATH/`basename $OBJECTS_PATH`*.H
+    for FILE in $FILES ; do
+        if [ -f $FILE ] ; then
+            echo $OBJECTS_PATH
+            echo
+            cat $OBJECTS_PATH/*.H | awk '
+                /\\\*/ {exit}
+                /SourceFiles/ {exit}
+                a == 1 {print}
+                /Description/ {a = 1} 
+            '
+            echo
+            echo
+            COUNT=`expr $COUNT + 1`
+            break
+        be
+    fi
+done
+echo Total $COUNT
+done
+
+#------------------------------------------------------------------------------#
