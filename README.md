@@ -12,6 +12,7 @@ My location of the bin folder is in my $HOME directory, therefore this needs to 
 if [ -d "$HOME/bin" ] ; then
 
     export PATH="$HOME/bin:$PATH"
+    export PATH="$HOME/bin/OpenFOAM:$PATH"
     
     if [ -f "$HOME/bin/aliases" ]; then
         source $HOME/bin/aliases
@@ -22,3 +23,10 @@ if [ -d "$HOME/bin" ] ; then
     fi
 fi
 ```
+
+OpenFOAM folder consists of various functions useful for use with OpenFOAM:
+
+ - RenameAndCombineSTLs
+	 + Print all OpenFOAM function objects
+ - printAllFunctionObjects
+	 + Combine multiple stls into one for meshing using cfMesh
