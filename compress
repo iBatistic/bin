@@ -6,7 +6,9 @@
 #Version         :0.1
 #Bash_version    :5.1.16(1)-release
 #Description     :
+#Note            :checked with ShellCheck
 #------------------------------------------------------------------------------#
+
 
 if [[ ( $# -eq 0 ) || ( $1 == "--help" ) || ( $1 == "-h" ) ]] ; then
     echo "Configured tar function to compress files" 
@@ -38,7 +40,10 @@ fi
 
 echo "Compressing folder $1 into $t"
 echo
-tar -czvf $t $1
+tar -czvf "$t" "$1"
+
+# Compressing using 16 cores
+# tar cf - *.csv | pigz -p 16 -c > resuls.tar.gz
 
 b_c=$(du -sh "$1" | awk '{print $1}')
 a_c=$(du -h "$t" | awk '{print $1}')

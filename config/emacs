@@ -1,0 +1,125 @@
+;;-------------------------------------------------
+;;Title         :Emacs config file
+;;Author        :Ivan Batistic
+;;Version       :0.1
+;;Date          :09/23
+;;-------------------------------------------------
+
+; To imidiately test command use: C+M+x
+
+; Don't show the splash screen
+(setq inhibit-startup-screen t)
+
+; Indents are 4 chars
+(setq c-basic-offset 4)
+
+; 4 char wide TAB
+(setq tab-width 4)
+
+; Highlight matching parenthesis
+(show-paren-mode 1)
+
+; Display line numbers in every buffer
+(global-display-line-numbers-mode 1)
+
+; Flash when the bell rings			;
+(setq visible-bell t)
+
+; Tool bar, menu bar ON/OFF
+(tool-bar-mode 1)
+(menu-bar-mode 1)
+
+; Highlight current line; highlighted color
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "#F0F7F4i")
+(set-face-foreground 'highlight nil)
+
+; Colour of marked lines
+(set-face-attribute 'region nil :background "#C3FDB8")
+
+; Line by line scrolling
+(setq scroll-step 1)
+
+; Show cursor position within line
+(column-number-mode 1)
+
+; Disable reindentation when new line is used
+(electric-indent-mode -1)
+
+; Color of trailing spaces
+(setq-default show-trailing-whitespace t)
+(set-face-background 'trailing-whitespace "yellow")
+
+; Color of trailing tab spaces
+(defface extra-whitespace-face '((t (:background "yellow"))) "Color for tabs and such.")
+(defvar bad-whitespace '(("\t" . 'extra-whitespace-face)))
+
+; Make tab key always call a indent command.
+(setq-default tab-always-indent t)
+
+; Make indent commands use space only (never tab character)
+(setq-default indent-tabs-mode nil)
+(setq tabify nil)
+
+; Set size of new window
+(when window-system (set-frame-size (selected-frame) 9 70))
+
+; Delete trailing white spaces when saving document
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+; Displat ruler at column 80
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+
+;-----------------------------------------------------
+; SANDBOX
+;-----------------------------------------------------
+
+; Ruler at column 80
+(setq-default fill-column 80)
+
+;-----------------------------------------------------
+; PACKAGES
+;-----------------------------------------------------
+
+;https://ianyepan.github.io/posts/setting-up-use-package/
+(require 'package)
+(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-and-compile
+  (setq use-package-always-ensure t
+        use-package-expand-minimally t))
+
+
+;https://ianyepan.github.io/posts/emacs-git-gutter/
+(use-package git-gutter
+:hook (prog-mode . git-gutter-mode)
+:config
+(setq git-gutter:update-interval 0.02))
+
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+
+;-----------------------------------------------------
+; CUSTOM SET VARIABLES
+;-----------------------------------------------------
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(git-gutter use-package cmake-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

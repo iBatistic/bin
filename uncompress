@@ -16,6 +16,6 @@ fi
 #grabs last passed argument..
 for last; do true; done
 
-tar -zxf $1
+tar -zvxf $1
 
 #------------------------------------------------------------------------------#
