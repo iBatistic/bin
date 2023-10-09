@@ -9,6 +9,8 @@
 #------------------------------------------------------------------------------#
 
 # Function used to check number of arguments
+# Arguments: number of arguments, required number of arguments
+# Return: 1 if number of arguments not match required number
 checkArgNum() {
     if [[ $1 -ne $2 ]]; then
         echo "$2 argument required, $1 provided" >&2
@@ -17,6 +19,8 @@ checkArgNum() {
 }
 
 # Save working directory path, use wd to relocate terminal on it
+# Arguments: None
+# Outputs: Writes location to $HOME/.saved_dir
 swd() {
     checkArgNum $# "0"
     returnValue=$?
@@ -34,6 +38,8 @@ swd() {
 
 
 # Change to directory saved using swd() function
+# Arguments: None
+# Outputs: Change terminal location to location saved in $HOME/.saved_dir
 wd() {
     checkArgNum $# "0"
     returnValue=$?
@@ -49,6 +55,8 @@ wd() {
 }
 
 # See the most used commands in terminal
+# Arguments: None
+# Outputs: Prints most used commands
 printComandsUsage () {
     checkArgNum $# "0"
     returnValue=$?
@@ -61,6 +69,8 @@ printComandsUsage () {
 }
 
 # Find file and grep expression through it
+# Arguments: file name and expression
+# Outputs: locations of expression for given file name
 findGrep () {
     checkArgNum $# "2"
     returnValue=$?
@@ -73,9 +83,18 @@ findGrep () {
 }
 
 # Run emacs always in backgroud
+# Globals: None
+# Arguments: None
+# Outputs: Run emacs & disown
 emacs () {
   /usr/bin/emacs "$@" &
   disown;
+}
+
+# This makes it easier to separate normal status from actual issues.
+# https://google.github.io/styleguide/shellguide.html
+err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
 }
 
 #------------------------------------------------------------------------------#

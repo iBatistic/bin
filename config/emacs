@@ -6,6 +6,7 @@
 ;;-------------------------------------------------
 
 ; To imidiately test command use: C+M+x
+; To use this config file make a soft link to $HOME/.emacs
 
 ; Don't show the splash screen
 (setq inhibit-startup-screen t)
@@ -31,7 +32,7 @@
 
 ; Highlight current line; highlighted color
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#F0F7F4i")
+(set-face-background 'hl-line "#E5E4E2")
 (set-face-foreground 'highlight nil)
 
 ; Colour of marked lines
@@ -62,7 +63,7 @@
 (setq tabify nil)
 
 ; Set size of new window
-(when window-system (set-frame-size (selected-frame) 9 70))
+(when window-system (set-frame-size (selected-frame) 90 70))
 
 ; Delete trailing white spaces when saving document
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -70,12 +71,32 @@
 ; Displat ruler at column 80
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
+; No more typing the whole yes or no. Just y or n will do.
+(fset 'yes-or-no-p 'y-or-n-p)
+
+; Scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+
 ;-----------------------------------------------------
 ; SANDBOX
 ;-----------------------------------------------------
 
 ; Ruler at column 80
 (setq-default fill-column 80)
+
+
+;; Remove messages from the *Messages* buffer.
+(setq-default message-log-max nil)
+
+; https://emacs.stackexchange.com/questions/60085/how-to-prevent-scratch-or-messages-buffer-to-show-up-when-i-open-via-em
+;; Kill both buffers on startup.
+(kill-buffer "*Messages*")
+(kill-buffer "*scratch*")
+
+;; Empty the *scratch* buffer.
+(setq initial-scratch-message "")
+
 
 ;-----------------------------------------------------
 ; PACKAGES
