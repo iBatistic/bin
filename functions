@@ -10,7 +10,7 @@
 
 # Function used to check number of arguments
 # Arguments: number of arguments, required number of arguments
-# Return: 1 if number of arguments not match required number
+# Returns: 1 if number of arguments not match required number
 checkArgNum() {
     if [[ $1 -ne $2 ]]; then
         echo "$2 argument required, $1 provided" >&2

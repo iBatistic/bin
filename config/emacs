@@ -8,11 +8,16 @@
 ; To imidiately test command use: C+M+x
 ; To use this config file make a soft link to $HOME/.emacs
 
+; Stop creating ~ files (backup files)
+(setq make-backup-files nil)
+; option for alternative location: (setq backup-directory-alist  '((".*" . "~/.Trash")))
+
 ; Don't show the splash screen
 (setq inhibit-startup-screen t)
 
 ; Indents are 4 chars
 (setq c-basic-offset 4)
+(c-set-offset 'substatement-open 0)
 
 ; 4 char wide TAB
 (setq tab-width 4)
@@ -89,14 +94,15 @@
 ;; Remove messages from the *Messages* buffer.
 (setq-default message-log-max nil)
 
-; https://emacs.stackexchange.com/questions/60085/how-to-prevent-scratch-or-messages-buffer-to-show-up-when-i-open-via-em
-;; Kill both buffers on startup.
-(kill-buffer "*Messages*")
-(kill-buffer "*scratch*")
-
 ;; Empty the *scratch* buffer.
 (setq initial-scratch-message "")
 
+; https://emacs.stackexchange.com/questions/60085/how-to-prevent-scratch-or-messages-buffer-to-show-up-when-i-open-via-em
+;; Kill both buffers on startup.
+(kill-buffer "*Messages*")
+
+; This one is not working
+(kill-buffer "*scratch*")
 
 ;-----------------------------------------------------
 ; PACKAGES
