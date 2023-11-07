@@ -51,4 +51,7 @@ alias psMemInfo='ps auxf | sort -nr -k 4 | head -10'
 # Show cpu demanding apps
 alias psCpuInfo='ps auxf | sort -nr -k 3 | head -10'
 
+# Emaca in terminal
+#alias emacst ='emacs -nw'
+
 #------------------------------------------------------------------------------#

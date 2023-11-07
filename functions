@@ -36,7 +36,6 @@ swd() {
     echo "Saved current working dir: $cwd"
 }
 
-
 # Change to directory saved using swd() function
 # Arguments: None
 # Outputs: Change terminal location to location saved in $HOME/.saved_dir
@@ -95,6 +94,38 @@ emacs () {
 # https://google.github.io/styleguide/shellguide.html
 err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+}
+
+# Convert pdf to version which can be rendered on windows os
+# Globals: None
+# Arguments: old_version.pdf new_version.pdf
+# Outputs: new_version.pdf
+convertPdfVersion () {
+    checkArgNum $# "2"
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+    
+    pdftocairo -pdf "$1" "$2"
+}
+
+# Convert pdf to svg
+# Globals: None
+# Arguments: name.pdf
+# Outputs: svg.pdf
+convertPdfToSVG () {
+    checkArgNum $# "1"
+    returnValue=$?
+    if [[ $returnValue -eq 1 ]]
+    then
+        return 1;
+    fi
+    
+    output=$(echo "$1" | cut -f 1 -d '.')
+    
+    pdftocairo -svg "$1" $output.svg
 }
 
 #------------------------------------------------------------------------------#
