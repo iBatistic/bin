@@ -61,11 +61,19 @@
 (defvar bad-whitespace '(("\t" . 'extra-whitespace-face)))
 
 ; Make tab key always call a indent command.
-(setq-default tab-always-indent t)
+;(setq-default tab-always-indent t)
 
 ; Make indent commands use space only (never tab character)
 (setq-default indent-tabs-mode nil)
 (setq tabify nil)
+
+;https://superuser.com/questions/268029/how-can-i-disable-smart-indentation-in-emacs-and-force-either-spaces-or-tabs
+(defvar just-tab-keymap (make-sparse-keymap) "Keymap for just-tab-mode")
+;(define-minor-mode just-tab-mode
+;   "Just want the TAB key to be a TAB"
+;   :global t :lighter " TAB" :init-value 0 :keymap just-tab-keymap
+;   (define-key just-tab-keymap (kbd "TAB") 'self-insert-command))
+(local-set-key (kbd "TAB") 'tab-to-tab-stop)
 
 ; Set size of new window
 (when window-system (set-frame-size (selected-frame) 90 70))
