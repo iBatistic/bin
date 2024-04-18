@@ -1,0 +1,117 @@
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+
+set nocompatible
+filetype plugin on
+syntax on
+
+set nobackup
+set nowb
+set noswapfile
+
+" Higlhight search
+set hlsearch
+
+" Copy paste across terminals
+" https://askubuntu.com/questions/60200/how-to-copy-data-between-different-instances-of-vim
+" second reply to topic!
+"set clipboard=unnamed
+set clipboard=unnamedplus
+
+" Turn on line numbering. Turn it off with 'set nonu'
+set number
+
+" Case insensitive search
+set ic
+
+" :W same as :w (can not be used becouse of delay)
+"noremap :W :w
+
+" Set cpp style for these extensions
+autocmd BufNewFile,BufReadPost *.cpp,*.C,*.H,*.h set filetype=cpp
+
+set tabstop=4
+set colorcolumn=80 "Enabled in ./vim/ftplugin/cpp.vim
+highlight ColorColumn ctermbg=magenta "238
+
+set expandtab
+set showmatch"
+set mouse=a
+set title
+set nocompatible
+set nofoldenable
+
+" Enable colors in tmux
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+set termguicolors
+"colorscheme xcodewwdc
+"colorscheme xcodelight
+
+"if has('gui_running')
+"    " GUI colors
+"    colorscheme default
+"    "colorscheme sublimemonokai
+"else
+"    " Non-GUI (terminal) colors
+"    "colorscheme sublimemonokai "murphy industry blue morning
+"    "colorscheme molokai  "blue darkblue murphy industry blue morning
+"
+"    " Enable 24bit colors for themes below
+"    set termguicolors
+"    "colorscheme xcodelight
+"    "colorscheme xcodelighthc
+"    "colorscheme xcodedark
+"    "colorscheme xcodedarkhc
+"    colorscheme xcodewwdc
+"endif
+
+if has("gui_running")
+    "colorscheme xcodelight
+    "colorscheme xcodewwdc
+    set lines=200 columns=90
+endif
+
+colorscheme xcodelight
+
+" https://superuser.com/questions/544869/how-to-force-gvim-to-display-all-files-in-edit-file-dialog-box
+if has('gui_running')
+    :autocmd FileType * unlet! b:browsefilter
+    " Show only file name in tab not the path
+    :set guitablabel=%t
+endif
+
+call pathogen#infect()
+
+map <F9> :bprevious<CR>
+map <F10> :bnext<CR>
+nmap <F6> :NERDTreeToggle<CR>
+map <tab> :bn<CR>
+
+"Enabled in ./vim/ftplugin/cpp.vim
+"highlight ExtraWhitespace ctermbg=blue guibg=gray90
+"2match ExtraWhitespace /\s\+$/
+
+"Bracket highlihting colors
+"cterm determines the style, which can be none, underline or bold,
+"ctermbg and ctermfg are background and foreground colors
+hi MatchParen cterm=none ctermbg=red ctermfg=magenta
+
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+" NOT WORKING PROPERLY CAN BE COMMENTED!
+" Manually set the status line color.
+hi StatusLineTerm ctermbg=24 ctermfg=254 guibg=#004f87 guifg=#e4e4e4
+hi StatusLineTermNC ctermbg=252 ctermfg=238 guibg=#d0d0d0 guifg=#444444
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PACKAGES
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"set runtimepath+=~/.vim
+"source ~/.vim/vimrcs/plugins.vim
