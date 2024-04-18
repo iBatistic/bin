@@ -91,6 +91,23 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
+; Fast scrolling removes lag
+(setq fast-but-imprecise-scrolling t)
+
+; Prevent emacs split horizontaly when opening new file
+(add-hook 'window-setup-hook 'delete-other-windows)
+
+; Compile .tex file using arara (C-c C-c Enter)
+(eval-after-load "tex"
+  '(add-to-list 'TeX-command-list
+        '("Arara" "arara --verbose %s" TeX-run-TeX nil t :help "Run Arara.")))
+
+(with-eval-after-load "latex"
+  (define-key LaTeX-mode-map (kbd "C-c C-a")
+     (lambda ()
+       (interactive)
+       (TeX-command-sequence '("Arara" "View") t))))
+
 ;-----------------------------------------------------
 ; SANDBOX
 ;-----------------------------------------------------
@@ -111,6 +128,9 @@
 
 ; This one is not working
 (kill-buffer "*scratch*")
+
+; https://www.reddit.com/r/emacs/comments/ji9nk0/why_is_emacs_is_so_laggy/
+(setq gc-cons-threshold (* 100 1024 1024))
 
 ;-----------------------------------------------------
 ; PACKAGES
