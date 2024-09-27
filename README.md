@@ -24,9 +24,4 @@ if [ -d "$HOME/bin" ] ; then
 fi
 ```
 
-OpenFOAM folder consists of various functions useful for use with OpenFOAM:
-
- - RenameAndCombineSTLs
-	 + Combine multiple stls into one for meshing using cfMesh
- - printAllFunctionObjects
-	 + Print all OpenFOAM function objects
+OpenFOAM folder consists of various functions and dicts useful for use with OpenFOAM.

@@ -5,6 +5,15 @@
 ;;Date          :09/23
 ;;-------------------------------------------------
 
+; Settings for terminal emacs
+(set-face-background 'default "#f2f4f4")
+(set-face-foreground 'default "black")
+(xterm-mouse-mode t)
+
+; Scroling behaviour
+(setq scroll-step 1 scroll-conservatively 100 scroll-margin 15)
+
+
 ; To imidiately test command use: C+M+x
 ; To use this config file make a soft link to $HOME/.emacs
 
@@ -42,9 +51,6 @@
 
 ; Colour of marked lines
 (set-face-attribute 'region nil :background "#C3FDB8")
-
-; Line by line scrolling
-(setq scroll-step 1)
 
 ; Show cursor position within line
 (column-number-mode 1)

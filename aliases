@@ -52,6 +52,17 @@ alias psMemInfo='ps auxf | sort -nr -k 4 | head -10'
 alias psCpuInfo='ps auxf | sort -nr -k 3 | head -10'
 
 # Emaca in terminal
-#alias emacst ='emacs -nw'
+alias e='emacs-gtk -nw'
+
+# gtime is alias on mac
+alias gtime='/usr/bin/time'
+
+# Program aliases, depends on local installation
+#alias pycharm='/home/$USER/opt/pycharm-2023.3.4/bin/pycharm.sh & disown'
+#alias fe40='source $HOME/foam/foam-extend-4.0/etc/bashrc'
+#alias fe41='source $HOME/foam/foam-extend-4.1/etc/bashrc'
+#alias fe50='source $HOME/foam/foam-extend-5.0/etc/bashrc'
+#alias of9='source /opt/openfoam9/etc/bashrc'
+#alias parafoam='touch log.foam; paraview log.foam'
 
 #------------------------------------------------------------------------------#

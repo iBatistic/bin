@@ -1,0 +1,28 @@
+#!/bin/bash
+#------------------------------------------------------------------------------#
+#Title           :export
+#Author          :Ivan Batistic
+#Date            :01/2023
+#Version         :0.1
+#Bash_version    :5.1.16(1)-release
+#Description     :
+#Note            :Installation dependend  and should be adjusted to the 
+#		  installation and placed in .bashrc file.
+#------------------------------------------------------------------------------#
+
+
+
+export PATH=/home/ibatistic/opt/ParaView-5.12.0-RC3-MPI-Linux-Python3.10-x86_64/bin:$PATH
+#export EIGEN_DIR="/usr/include/eigen3"
+
+export PATH="$PATH:/home/ibatistic/opt/gmsh-4.13.1-Linux64/bin"
+export FOAM_ABORT=1
+
+# In default bashrc this is commented
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+export PETSC_ARCH=arch-linux-c-opt
+export PETSC_DIR=/home/ibatistic/opt/petsc
+export LD_LIBRARY_PATH=${PETSC_DIR}/${PETSC_ARCH}/lib:$LD_LIBRARY_PATH
+
+#------------------------------------------------------------------------------#
