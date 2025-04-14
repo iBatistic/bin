@@ -9,13 +9,13 @@
 #------------------------------------------------------------------------------#
 
 if [[ ( $# -eq 0 ) || ( $1 == "--help" ) || ( $1 == "-h" ) ]] ; then
-    echo "Configured rsync function to sync files" 
-    echo "       " 
+    echo "Configured rsync function to sync files"
+    echo "       "
     echo "Options used: -rtpv --progress --delete --modify-window=1 -lHs"
     echo "       "
-    echo "Mandatory arguments (can be relative path): " 
-    echo "PATH_FROM: sourceDir/" 
-    echo "PATH_TO: targetDir/" 
+    echo "Mandatory arguments (can be relative path): "
+    echo "PATH_FROM: sourceDir/"
+    echo "PATH_TO: targetDir/"
     echo "     "
     echo "Example:"
     echo "rsync -r -t -p -v --progress --delete --modify-window=1 -l -H -s sourceDir/ targetDir/"
@@ -39,10 +39,10 @@ printf "\n"
 while true; do
 
     rsync -n -r -t -p -v --progress --delete --modify-window=1 -l -H -s ${@:1:$(($#-1))} $last
-    
+
     read -p "Do you want to continue? (y/n) " yn
 
-    case $yn in 
+    case $yn in
         [yY] ) rsync -r -t -p -v --progress --delete --modify-window=1 -l -H -s ${@:1:$(($#-1))} $last
             break;;
         [nN] ) break;;

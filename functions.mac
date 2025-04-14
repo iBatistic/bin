@@ -18,11 +18,6 @@ checkArgNum() {
     fi
 }
 
-# Function to scale png images
-resizeImage() {
-    convert -resize 20% $1 $2
-}
-
 # Save working directory path, use wd to relocate terminal on it
 # Arguments: None
 # Outputs: Writes location to $HOME/.saved_dir
@@ -90,10 +85,10 @@ findGrep () {
 # Globals: None
 # Arguments: None
 # Outputs: Run emacs & disown
-emacs () {
-  /usr/bin/emacs "$@" &
-  disown;
-}
+#emacs () {
+#  /usr/bin/emacs "$@" &
+#  disown;
+#}
 
 # This makes it easier to separate normal status from actual issues.
 # https://google.github.io/styleguide/shellguide.html
