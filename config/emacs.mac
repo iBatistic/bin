@@ -5,8 +5,9 @@
 ;;Date          :09/23
 ;;-------------------------------------------------
 
+
 ; Settings for terminal emacs
-(set-face-background 'default "#f2f4f4")
+;(set-face-background 'default "#f2f4f4")
 (set-face-foreground 'default "black")
 (xterm-mouse-mode t)
 
@@ -47,18 +48,18 @@
 (menu-bar-mode 1)
 
 ; Highlight current line; highlighted color
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "#E5E4E2")
-(set-face-foreground 'highlight nil)
+;(global-hl-line-mode 1)
+;(set-face-background 'hl-line "#E3E6E2")
+;(set-face-foreground 'highlight nil)
 
 ; Colour of marked lines
 (set-face-attribute 'region nil :background "#C3FDB8")
 
-; Show cursor position within line
+;;; Show cursor position within line
 (column-number-mode 1)
 
-; Disable reindentation when new line is used
-(electric-indent-mode -1)
+;;; Disable reindentation when new line is used
+;;(electric-indent-mode -1)
 
 ; Color of trailing spaces
 (setq-default show-trailing-whitespace t)
@@ -67,156 +68,88 @@
 ; Color of trailing tab spaces
 (defface extra-whitespace-face '((t (:background "yellow"))) "Color for tabs and such.")
 (defvar bad-whitespace '(("\t" . 'extra-whitespace-face)))
-
-; Make tab key always call a indent command.
-;(setq-default tab-always-indent t)
-
-; Make indent commands use space only (never tab character)
-(setq-default indent-tabs-mode nil)
-(setq tabify nil)
-
-;https://superuser.com/questions/268029/how-can-i-disable-smart-indentation-in-emacs-and-force-either-spaces-or-tabs
-(defvar just-tab-keymap (make-sparse-keymap) "Keymap for just-tab-mode")
-;(define-minor-mode just-tab-mode
-;   "Just want the TAB key to be a TAB"
-;   :global t :lighter " TAB" :init-value 0 :keymap just-tab-keymap
-;   (define-key just-tab-keymap (kbd "TAB") 'self-insert-command))
-(local-set-key (kbd "TAB") 'tab-to-tab-stop)
-
-; Set size of new window
-(when window-system (set-frame-size (selected-frame) 90 70))
-
-; Delete trailing white spaces when saving document
+;;
+;;
+;;
+;;
+;;; Make tab key always call a indent command.
+;;;(setq-default tab-always-indent t)
+;;
+;;; Make indent commands use space only (never tab character)
+;;(setq-default indent-tabs-mode nil)
+;;(setq tabify nil)
+;;
+;;;https://superuser.com/questions/268029/how-can-i-disable-smart-indentation-in-emacs-and-force-either-spaces-or-tabs
+;;(defvar just-tab-keymap (make-sparse-keymap) "Keymap for just-tab-mode")
+;;;(define-minor-mode just-tab-mode
+;;;   "Just want the TAB key to be a TAB"
+;;;   :global t :lighter " TAB" :init-value 0 :keymap just-tab-keymap
+;;;   (define-key just-tab-keymap (kbd "TAB") 'self-insert-command))
+;;(local-set-key (kbd "TAB") 'tab-to-tab-stop)
+;;
+;;; Set size of new window
+;;(when window-system (set-frame-size (selected-frame) 90 70))
+;;
+;;; Delete trailing white spaces when saving document
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-; Displat ruler at column 80
+;;
+;;; Displat ruler at column 80
+(setq-default fill-column 80)  ;; Set default fill column
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
-; No more typing the whole yes or no. Just y or n will do.
+;;
+;;; No more typing the whole yes or no. Just y or n will do.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-; Scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-(setq mouse-wheel-progressive-speed nil)
+;;; Scroll one line at a time (less "jumpy" than defaults)
+;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+;;(setq mouse-wheel-progressive-speed nil)
 
-; Fast scrolling removes lag
-(setq fast-but-imprecise-scrolling t)
+;;; Fast scrolling removes lag
+;;(setq fast-but-imprecise-scrolling t)
 
 ; Prevent emacs split horizontaly when opening new file
 (add-hook 'window-setup-hook 'delete-other-windows)
-
-; Compile .tex file using arara (C-c C-c Enter)
-(eval-after-load "tex"
-  '(add-to-list 'TeX-command-list
-        '("Arara" "arara --verbose %s" TeX-run-TeX nil t :help "Run Arara.")))
-
-(with-eval-after-load "latex"
-  (define-key LaTeX-mode-map (kbd "C-c C-a")
-     (lambda ()
-       (interactive)
-       (TeX-command-sequence '("Arara" "View") t))))
-
-;-----------------------------------------------------
-; OPENFOAM C++
-; from https://openfoamwiki.net/index.php/HowTo_xemacsIndentation
-;-----------------------------------------------------
-
-(c-basic-offset . 4)
-(c-tab-always-indent . t)
-(indent-tabs-mode . nil)
-(c-comment-only-line-offset . (0 . 0))
-(c-indent-comments-syntactically-p . t)
-(c-block-comments-indent-p nil)
-(c-cleanup-list .
-    '((defun-close-semi) (list-close-comma) (scope-operator)))
-(c-backslash-column . 48)
-(c-offsets-alist .
-(
-(c . +)                     ;; inside a multi-line C style block  comment
-(defun-open . 0)            ;; brace that opens a function definition
-(defun-close . 0)           ;; brace that closes a function definition
-(defun-block-intro . +)     ;; the first line in a top-level defun
-(class-open . 0)            ;; brace that opens a class definition
-(class-close . 0)           ;; brace that closes a class definition
-(inline-open . +)           ;; brace that opens an in-class inline method
-(inline-close . 0)          ;; brace that closes an in-class inline method
-(topmost-intro . 0)         ;; the first line in a topmost construct
-                            ;; definition
-(topmost-intro-cont . 0)    ;; topmost definition continuation lines
-(member-init-intro . +)     ;; first line in a member initialization list
-(member-init-cont . 0)      ;; subsequent member initialization list lines
-(inher-intro . 0)           ;; first line of a multiple inheritance list
-(inher-cont . +)            ;; subsequent multiple inheritance lines
-(block-open . 0)            ;; statement block open brace
-(block-close . 0)           ;; statement block close brace
-(brace-list-open . 0)       ;; open brace of an enum or static array list
-(brace-list-close . 0)      ;; open brace of an enum or static array list
-(brace-list-intro . +)      ;; first line in an enum or static array list
-(brace-list-entry . 0)      ;; subsequent lines in an enum or static array
-
-(namespace-open  . 0)
-(namespace-close . 0)
-(innamespace     . 0)
-
-(statement . 0)             ;; a C/C++/ObjC statement
-(statement-cont . +)        ;; a continuation of a C/C++/ObjC statement
-(statement-block-intro . +) ;; the first line in a new statement block
-(statement-case-intro . +)  ;; the first line in a case `block'
-(statement-case-open . 0)   ;; the first line in a case `block'
-                            ;; starting with brace
-(substatement . +)          ;; the first line after an if/while/for/do/else
-(substatement-open . 0)     ;; the brace that opens a substatement block
-(case-label . +)            ;; a case or default label
-(access-label . -)          ;; C++ private/protected/public access label
-(label . -)                 ;; any non-special C/C++/ObjC label
-(do-while-closure . 0)      ;; the `while' that ends a do/while construct
-(else-clause . 0)           ;; the `else' of an if/else construct
-(comment-intro . 0)         ;; line containing only a comment introduction
-(arglist-intro . +)         ;; the first line in an argument list
-(arglist-cont . 0)          ;; subsequent argument list lines when no
-                            ;; subsequent argument list lines
-                            ;; when no the
-                            ;; arglist opening paren
-(arglist-cont-nonempty . 0) ;; subsequent argument list lines when at
-                            ;; subsequent argument list lines
-                            ;; when at line
-                            ;; as the arglist opening paren
-(arglist-close . 0)         ;; line as the arglist opening paren
-(stream-op . +)             ;; lines continuing a stream operator construct
-(inclass . +)               ;; the construct is nested inside a class
-                            ;; definition
-
-;(cpp-macro . +)             ;; the construct is nested inside a class
-;                            ;; definition
-(cpp-macro . c-lineup-cpp-define)
-
-(friend . 0)                ;; a C++ friend declaration
-)
-)
-
-;-----------------------------------------------------
-; SANDBOX
-;-----------------------------------------------------
-
-; Ruler at column 80
-(setq-default fill-column 80)
+;;
+;;; Compile .tex file using arara (C-c C-c Enter)
+;;(eval-after-load "tex"
+;;  '(add-to-list 'TeX-command-list
+;;        '("Arara" "arara --verbose %s" TeX-run-TeX nil t :help "Run Arara.")))
+;;
+;;(with-eval-after-load "latex"
+;;  (define-key LaTeX-mode-map (kbd "C-c C-a")
+;;     (lambda ()
+;;       (interactive)
+;;       (TeX-command-sequence '("Arara" "View") t))))
+;;
+;;
 
 
-;; Remove messages from the *Messages* buffer.
-(setq-default message-log-max nil)
 
-;; Empty the *scratch* buffer.
+;;;-----------------------------------------------------
+;;; SANDBOX
+;;;-----------------------------------------------------
+;;
+;;; Ruler at column 80
+;(setq-default fill-column 80)
+;;
+;;
+;;;; Remove messages from the *Messages* buffer.
+;;(setq-default message-log-max nil)
+;;
+;;;; Empty the *scratch* buffer.
 (setq initial-scratch-message "")
 
 ; https://emacs.stackexchange.com/questions/60085/how-to-prevent-scratch-or-messages-buffer-to-show-up-when-i-open-via-em
-;; Kill both buffers on startup.
+; Kill both buffers on startup.
 (kill-buffer "*Messages*")
 
 ; This one is not working
 (kill-buffer "*scratch*")
 
-; https://www.reddit.com/r/emacs/comments/ji9nk0/why_is_emacs_is_so_laggy/
-(setq gc-cons-threshold (* 100 1024 1024))
+;;
+;;; https://www.reddit.com/r/emacs/comments/ji9nk0/why_is_emacs_is_so_laggy/
+;;(setq gc-cons-threshold (* 100 1024 1024))
 
 ;-----------------------------------------------------
 ; PACKAGES
@@ -224,40 +157,64 @@
 
 ;https://ianyepan.github.io/posts/setting-up-use-package/
 (require 'package)
-(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu"   . "https://elpa.gnu.org/packages/")))
+
 (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-and-compile
-  (setq use-package-always-ensure t
-        use-package-expand-minimally t))
+(unless package-archive-contents
+  (package-refresh-contents))
 
+;(unless (package-installed-p 'use-package)
+;  (package-refresh-contents)
+;  (package-install 'use-package))
+;(eval-and-compile
+;  (setq use-package-always-ensure t
+;        use-package-expand-minimally t))
+
+(setq git-gutter:modified-sign "≋")
+(setq git-gutter:added-sign    "✚")
+(setq git-gutter:deleted-sign  "✖")
 
 ;https://ianyepan.github.io/posts/emacs-git-gutter/
 (use-package git-gutter
-:hook (prog-mode . git-gutter-mode)
-:config
-(setq git-gutter:update-interval 0.02))
+  :hook (prog-mode . git-gutter-mode)
+  :config
+  (setq git-gutter:update-interval 0.02))
 
+(when (display-graphic-p)
 (use-package git-gutter-fringe
   :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [224 224 224 224] nil nil '(center repeated))))
 
 ;-----------------------------------------------------
 ; CUSTOM SET VARIABLES
 ;-----------------------------------------------------
 
+;;(custom-set-variables
+;; ;; custom-set-variables was added by Custom.
+;; ;; If you edit it by hand, you could mess it up, so be careful.
+;; ;; Your init file should contain only one such instance.
+;; ;; If there is more than one, they won't work right.
+;; '(package-selected-packages '(git-gutter use-package cmake-mode)))
+;;(custom-set-faces
+;; ;; custom-set-faces was added by Custom.
+;; ;; If you edit it by hand, you could mess it up, so be careful.
+;; ;; Your init file should contain only one such instance.
+;; ;; If there is more than one, they won't work right.
+;; )
+;;
+;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(git-gutter use-package cmake-mode)))
+ '(package-selected-packages '(fringe-helper git-gutter git-gutter-fringe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
