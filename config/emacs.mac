@@ -1,14 +1,10 @@
 ;;-------------------------------------------------
 ;;Title         :Emacs config file
 ;;Author        :Ivan Batistic
-;;Version       :0.1
+;;Version       :0.2
 ;;Date          :09/23
 ;;-------------------------------------------------
 
-
-; Settings for terminal emacs
-;(set-face-background 'default "#f2f4f4")
-(set-face-foreground 'default "black")
 (xterm-mouse-mode t)
 
 ; Scroling behaviour
@@ -40,7 +36,7 @@
 ; Display line numbers in every buffer
 (global-display-line-numbers-mode 1)
 
-; Flash when the bell rings			;
+; Flash when the bell rings
 (setq visible-bell t)
 
 ; Tool bar, menu bar ON/OFF
@@ -48,14 +44,14 @@
 (menu-bar-mode 1)
 
 ; Highlight current line; highlighted color
-;(global-hl-line-mode 1)
-;(set-face-background 'hl-line "#E3E6E2")
-;(set-face-foreground 'highlight nil)
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "#E3E6E2")
+(set-face-foreground 'highlight nil)
 
 ; Colour of marked lines
 (set-face-attribute 'region nil :background "#C3FDB8")
 
-;;; Show cursor position within line
+;Show cursor position within line
 (column-number-mode 1)
 
 ;;; Disable reindentation when new line is used
@@ -68,49 +64,57 @@
 ; Color of trailing tab spaces
 (defface extra-whitespace-face '((t (:background "yellow"))) "Color for tabs and such.")
 (defvar bad-whitespace '(("\t" . 'extra-whitespace-face)))
-;;
-;;
-;;
-;;
-;;; Make tab key always call a indent command.
-;;;(setq-default tab-always-indent t)
-;;
-;;; Make indent commands use space only (never tab character)
-;;(setq-default indent-tabs-mode nil)
-;;(setq tabify nil)
-;;
-;;;https://superuser.com/questions/268029/how-can-i-disable-smart-indentation-in-emacs-and-force-either-spaces-or-tabs
-;;(defvar just-tab-keymap (make-sparse-keymap) "Keymap for just-tab-mode")
-;;;(define-minor-mode just-tab-mode
-;;;   "Just want the TAB key to be a TAB"
-;;;   :global t :lighter " TAB" :init-value 0 :keymap just-tab-keymap
-;;;   (define-key just-tab-keymap (kbd "TAB") 'self-insert-command))
-;;(local-set-key (kbd "TAB") 'tab-to-tab-stop)
-;;
-;;; Set size of new window
+
+(unless (display-graphic-p)
+  ;; Default face (background + text)
+  (set-face-attribute 'default nil :background "#f0f0f0" :foreground "#ffffff")
+
+  ; ;; Softer highlight for selected text (region)
+  ; (set-face-attribute 'region nil
+  ;                   :background "#1e1e1e"   ;; light blue-gray
+  ;                   :foreground 'unspecified)
+		    )
+
+; ;;; Make tab key always call a indent command.
+; ;;;(setq-default tab-always-indent t)
+; ;;
+; ;;; Make indent commands use space only (never tab character)
+; ;;(setq-default indent-tabs-mode nil)
+; ;;(setq tabify nil)
+; ;;
+; ;;;https://superuser.com/questions/268029/how-can-i-disable-smart-indentation-in-emacs-and-force-either-spaces-or-tabs
+; ;;(defvar just-tab-keymap (make-sparse-keymap) "Keymap for just-tab-mode")
+; ;;;(define-minor-mode just-tab-mode
+; ;;;   "Just want the TAB key to be a TAB"
+; ;;;   :global t :lighter " TAB" :init-value 0 :keymap just-tab-keymap
+; ;;;   (define-key just-tab-keymap (kbd "TAB") 'self-insert-command))
+; ;;(local-set-key (kbd "TAB") 'tab-to-tab-stop)
+; ;;
+; ;;; Set size of new window
 ;;(when window-system (set-frame-size (selected-frame) 90 70))
-;;
-;;; Delete trailing white spaces when saving document
+
+; Delete trailing white spaces when saving document
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-;;
-;;; Displat ruler at column 80
+
+; Displat ruler at column 80
 (setq-default fill-column 80)  ;; Set default fill column
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
-;;
-;;; No more typing the whole yes or no. Just y or n will do.
+
+; No more typing the whole yes or no. Just y or n will do.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;;; Scroll one line at a time (less "jumpy" than defaults)
-;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-;;(setq mouse-wheel-progressive-speed nil)
+; ;;; Scroll one line at a time (less "jumpy" than defaults)
+; ;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+; ;;(setq mouse-wheel-progressive-speed nil)
 
-;;; Fast scrolling removes lag
-;;(setq fast-but-imprecise-scrolling t)
+; ;;; Fast scrolling removes lag
+; ;;(setq fast-but-imprecise-scrolling t)
 
 ; Prevent emacs split horizontaly when opening new file
 (add-hook 'window-setup-hook 'delete-other-windows)
-;;
+
+
 ;;; Compile .tex file using arara (C-c C-c Enter)
 ;;(eval-after-load "tex"
 ;;  '(add-to-list 'TeX-command-list
@@ -126,18 +130,18 @@
 
 
 
-;;;-----------------------------------------------------
-;;; SANDBOX
-;;;-----------------------------------------------------
-;;
-;;; Ruler at column 80
-;(setq-default fill-column 80)
-;;
-;;
-;;;; Remove messages from the *Messages* buffer.
-;;(setq-default message-log-max nil)
-;;
-;;;; Empty the *scratch* buffer.
+; ;;;-----------------------------------------------------
+; ;;; SANDBOX
+; ;;;-----------------------------------------------------
+; ;;
+; ;;; Ruler at column 80
+; ;(setq-default fill-column 80)
+; ;;
+; ;;
+; ;;;; Remove messages from the *Messages* buffer.
+; ;;(setq-default message-log-max nil)
+; ;;
+; ;;;; Empty the *scratch* buffer.
 (setq initial-scratch-message "")
 
 ; https://emacs.stackexchange.com/questions/60085/how-to-prevent-scratch-or-messages-buffer-to-show-up-when-i-open-via-em
@@ -147,13 +151,14 @@
 ; This one is not working
 (kill-buffer "*scratch*")
 
-;;
-;;; https://www.reddit.com/r/emacs/comments/ji9nk0/why_is_emacs_is_so_laggy/
-;;(setq gc-cons-threshold (* 100 1024 1024))
+; ;;
+; ;;; https://www.reddit.com/r/emacs/comments/ji9nk0/why_is_emacs_is_so_laggy/
+; ;;(setq gc-cons-threshold (* 100 1024 1024))
 
-;-----------------------------------------------------
-; PACKAGES
-;-----------------------------------------------------
+
+; ;-----------------------------------------------------
+; ; PACKAGES
+; ;-----------------------------------------------------
 
 ;https://ianyepan.github.io/posts/setting-up-use-package/
 (require 'package)
@@ -190,6 +195,13 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [224 224 224 224] nil nil '(center repeated))))
+
+
+;   (setq modus-themes-common-palette-overrides nil)
+
+;   ;; Finally, load your theme of choice (or a random one with
+;   (modus-themes-load-theme 'modus-vivendi))
+
 
 ;-----------------------------------------------------
 ; CUSTOM SET VARIABLES
