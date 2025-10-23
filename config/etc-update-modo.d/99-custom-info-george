@@ -1,0 +1,61 @@
+#!/bin/bash
+
+echo
+echo "👋 Welcome to the george machine"
+echo "---------------------------------------------"
+echo "System Information as of: $(date)"
+echo
+echo "Hostname     : $(hostname)"
+echo "Uptime       : $(uptime -p)"
+echo "Load Average : $(cut -d ' ' -f1-3 /proc/loadavg)"
+echo -n "Memory Usage : "
+free -h | awk '/Mem:/ {print $3 " used / " $2}'
+echo -n "Disk Usage   : "
+df -h / | awk 'NR==2 {print $3 " used of " $2 " (" $5 ")"}'
+echo
+echo "
+🖥️  System Overview
+─────────────────────────────────────────────
+🔹 CPU  : 2× Intel Gold 6226R — 2x 32 = 64 cores total (32 physical cores + 32 virtual cores)
+          Base clock: 2.9 GHz | Boost up to: 3.9 GHz
+🔹 RAM  : 384 GB DDR4 ECC 2966 MHz
+🔹 OS   : Ubuntu 22.04.5 LTS"
+echo
+echo "
+📦 Storage Layout
+─────────────────────────────────────────────
+🔹 /home/$(hostname) → Main drive (shared for all users)
+    - 1× 0.5 TB NVMe SSD
+    - High-speed: use for running models and active workflows
+
+🔹 /media/ → Backup drive (on request)
+    - 2× 1 TB HDDs
+    - Use for results, large data sets, or archival files
+
+⚠️  Offsite/cloud backups are not configured — manage your critical data accordingly
+
+💡 Tip: Only you can access your backup folder drive. Use it to store work safely.
+📬 Issues or requests? Contact ivan.batistic@fsb.unizg.hr
+
+📊 Disk Quotas
+─────────────────────────────────────────────
+🔹 You have usage limits (quotas) on:
+- /home/ibatistic       (main SSD): 500 GB (all users)
+- /mnt/backup/ibatistic (HDD):      on request
+"
+echo "
+ ∇ OpenFOAM
+─────────────────────────────────────────────
+🧪 Available OpenFOAM versions on this system:
+   • openfoam2106 → source /usr/lib/openfoam/openfoam2106/etc/bashrc
+   • openfoam2206 → source /usr/lib/openfoam/openfoam2206/etc/bashrc
+   • openfoam2306 → source /usr/lib/openfoam/openfoam2306/etc/bashrc
+   • openfoam2312 → source /usr/lib/openfoam/openfoam2312/etc/bashrc
+   • openfoam2412 → source /usr/lib/openfoam/openfoam2412/etc/bashrc
+   • foam-extend-4.0 → source /opt/foam/foam-extend-4.0/etc/bashrc
+   • foam-extend-4.1 → source /opt/foam/foam-extend-4.1/etc/bashrc
+
+   Use commands like: of2412 or fe41 to load OpenFOAM/foam versions
+
+   Contact ivan.batistic@fsb.unizg.hr if a version you need is missing."
+echo
