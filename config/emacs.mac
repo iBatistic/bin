@@ -5,6 +5,25 @@
 ;;Date          :09/23
 ;;-------------------------------------------------
 
+(defun copy-to-clipboard ()
+  "Copies selection to macOS clipboard."
+  (interactive)
+  (if (use-region-p)
+      (progn
+        (shell-command-on-region (region-beginning) (region-end) "pbcopy")
+        (deactivate-mark)
+        (message "Copied to clipboard"))
+    (message "No region selected")))
+
+(defun paste-from-clipboard ()
+  "Pastes from macOS clipboard."
+  (interactive)
+  (insert (shell-command-to-string "pbpaste")))
+
+(global-set-key (kbd "M-w") 'copy-to-clipboard)
+(global-set-key (kbd "C-y") 'paste-from-clipboard)
+
+
 (xterm-mouse-mode t)
 
 ; Scroling behaviour
